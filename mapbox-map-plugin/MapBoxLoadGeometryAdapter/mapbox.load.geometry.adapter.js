@@ -8,7 +8,7 @@
         style       : null,
         zoomTo      : false
     };
-    
+
     /**
      * [xDebug - PRIVATE function for debug]
      * @param  string   functionName  caller function
@@ -24,7 +24,7 @@
      */
     var triggerEvent = function(evt, evtData) {
         xDebug.call(this, arguments.callee.name, arguments);
-        this.container.trigger(evt, [evtData]);        
+        this.container.trigger(evt, [evtData]);
         $(this).trigger(evt + "." + this.apexname, [evtData]);
     };
 
@@ -56,7 +56,7 @@
 
             this.mapBoxMap = this.region.data("mapboxRegion");
 
-            if ($.isPlainObject(this.mapBoxMap) === false) {
+            if (typeof(this.mapBoxMap) !== "object") {
                 throw this.jsName + ": Can't access mapboxRegion region data.";
             }
 
@@ -75,7 +75,7 @@
          * @param  Object idVal unique identifier for geometry fetch
          * @return this
          */
-        loadFromAjax: function loadFromAjax(idVal) {            
+        loadFromAjax: function loadFromAjax(idVal) {
             var queryString = {
                 p_flow_id      : $('#pFlowId').val(),
                 p_flow_step_id : $('#pFlowStepId').val(),
@@ -120,8 +120,9 @@
                 if (this.options.style && $.isEmptyObject(this.options.style) === false) {
                     geoJson.properties = style || this.options.style;
                 }
-
+				editableLayers.clearLayers();
                 this.mapBoxMap.setGeoJSON(geoJson, this.options.zoomTo);
+
             }
 
             return this;
